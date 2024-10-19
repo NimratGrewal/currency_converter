@@ -1,0 +1,277 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+
+    <style> 
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Optima', sans-serif;
+            color: #f2dfe9;
+            color-scheme: dark;
+        }
+
+        body {
+            background-color: #211a29;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        header {
+            color: #f2dfe9;
+            background-color: #120d18;
+            padding: 20px;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        footer {
+            color: #f2dfe9;
+            font-size: 10px;
+            background-color: #120d18;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #conversionContainer {
+            
+            background-color: #120d18;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.7);
+            margin: 25 25 25 25;
+
+        }
+
+        select {
+            margin: 20px 10px;
+            background-color: #f2dfe9;
+            color: #05002c;
+            padding: 10px;
+            font-size: 1rem;
+            border: 3px solid #202020;
+            border-radius: 15px;
+            outline: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        select:hover {
+            border-color: #7d64ce;
+        }
+
+
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #120d18;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.7);
+            
+        }
+        #result {
+            margin: 30px;
+            color: #f2dfe9;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+  
+        }
+
+        #intro {
+            margin: 20px;
+            color: #f2dfe9;
+            padding: 10px;
+            font-size: 1.1rem;
+        }
+
+        #amountError {
+            color: red;
+            font-size: 1rem;
+            margin: 10px 0;
+            margin-left: 5px;
+        }
+
+        #amountInput {
+            min-width:10%;
+            color:#05002c;
+            font-weight: bold;
+            height: 5%;
+            top:0%;
+            right:0%;
+            z-index:10;
+            background-color:#e2d7ee;
+            border: 3px solid  #202020;
+            padding:5px;
+            font-size: medium;
+            border-radius: 15px;
+            margin-left: 5px;
+        }
+        #amountInput:hover {
+            border-color: #7d64ce;
+        }
+        #fromCurrency #toCurrency {
+            margin:20px;
+            margin-left: 5px;
+            background-color: #120d18;
+            padding:10px;
+            font-size: medium;
+            border: 3px solid  #202020;
+        }
+        
+    
+    </style>
+</head>
+
+<body>
+    <header><h1 id="title">Nimrat's Currency Converter</h1></header>
+
+    <div id="inner">
+        <section id="intro">
+            <h3>Conversion Engine</h3>
+        </section>
+        
+        <section class="input" id="amount">
+            <label for="amountInput"> Amount to Convert:</label>
+            <input type="text" placeholder="enter an amount..." id="amountInput" name="amountInput" required> 
+            <span class="amountError" id="amountError"></span><br>
+        </section>
+        
+        <section id="conversionContainer">
+            <!-- <label for="fromCurrency"> From:</label>
+            <input type="text" placeholder="e.g. CAD" id="fromCurrency" name="fromCurrency" required> 
+            
+            <label for="toCurrency"> To:</label>
+            <input type="text" placeholder="e.g. USD" id="toCurrency" name="toCurrency">  -->
+            <label for="fromCurrency"> From:</label>
+            <select id="fromCurrency">
+                <option value="">Select Currency</option>
+            </select>
+            <label for="toCurrency"> To:</label>
+            <select id="toCurrency">
+                <option value="">Select Currency</option>
+            </select>
+        </section>
+
+        <section>
+
+        </section>
+
+        <section class="output" id="result">
+            Converted Amount: <span id="convertedAmount">--</span>
+        </section>
+
+    </div>
+    <footer>&copy; 2024 Nimrat Grewal. All rights reserved. </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <script>
+        // using jQuery
+        // used FreecurrencyAPI - free use
+        const apiKey = 'fca_live_0Jh1hRk36raZYWj0xo2KJTa0VAT3gYuHMYo3sxjH'; //replace with your free API key 
+        const apiUrl = 'https://api.freecurrencyapi.com/v1/latest?apikey='; //endpoint
+        const currencyApiUrl = 'https://api.freecurrencyapi.com/v1/currencies?apikey='
+
+        $(document).ready(function() {
+
+        function loadCurrencyDropdown() {
+            const loadCurrenyQuery =currencyApiUrl + apiKey;
+
+            $.ajax({
+                url: loadCurrenyQuery,
+                method: 'GET',
+                headers: {
+                    "apikey": apiKey
+                },
+                success: function(response) {
+                    const currencies = response.data;
+                    populateCurrencyDropdowns(currencies); // populate dropdown function
+                },
+                error: function() {
+                    console.error('Error fetching currency list');
+                }
+
+            });
+
+        }
+
+        function populateCurrencyDropdowns(currencies) {
+            const fromDropdown = $('#fromCurrency');
+            const toDropdown = $('#toCurrency');
+
+            // Iterate over the currencies object and add each option
+            for (const currencyCode in currencies) {
+                const currencyName = currencies[currencyCode].name;
+                const option = `<option value="${currencyCode}">${currencyName} (${currencyCode})</option>`;
+
+                // Append to both dropdowns
+                fromDropdown.append(option);
+                toDropdown.append(option);
+            }
+        }
+
+
+        $('#fromCurrency, #toCurrency, #amountInput').on('input change', function() {
+            const fromCurr = $('#fromCurrency').val();
+            const toCurr = $('#toCurrency').val();
+            const amount = $('#amountInput').val();
+
+            if (isNaN(amount) || !/^\d+(\.\d+)?$/.test(amount)) {
+                // display usage return message.
+                $('#amountError').text("Invalid amount");
+                $('#amountError').css('font-size', 'small');
+                $('#amountError').css('font-weight', '100');
+                $('#amountError').css('color', 'red');
+                $('#amountInput').css('border', 'red solid 2px');
+                $('#convertedAmount').text('--');
+            } else {
+                // Clear the error message
+                $('#amountError').text('');
+                $('#amountInput').css('border', '');
+                doCurrConversion(parseFloat(amount), fromCurr, toCurr);
+            }
+
+        });
+
+        function doCurrConversion(amount, fromCurr, toCurr) {
+            const end = `&currencies=${toCurr}&base_currency=${fromCurr}`;
+            const query = apiUrl + apiKey + end;
+
+            $.ajax({
+                url: query,
+                method: 'GET',
+                headers: {
+                    "apikey": apiKey
+                },
+                success: function(response) {
+                    const rate = response.data[toCurr];
+                    const convertedAmount = parseFloat((amount * rate).toFixed(2));
+                    //update to converted ammount
+                    $('#convertedAmount').text(convertedAmount + " " + toCurr);
+                },
+                error: function() {
+                    $('#convertedAmount').text('Invalid currency');
+                }
+            });
+            // return amount * (query return) = ____ amount of toCurr
+        }
+        loadCurrencyDropdown();
+        });
+    </script>
+    
+</body>
+</html>
