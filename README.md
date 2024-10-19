@@ -1,6 +1,6 @@
 **Currency Converter**
 
-A simple currency converter built using **HTML, CSS, jQuery**, and a **freecurrencAPI**.
+A simple currency converter built using **HTML, CSS, jQuery**, and a **freecurrencyAPI**.
 
 Features
 - Real-time currency conversion.
