@@ -12,8 +12,6 @@ Setup
    
    git clone https://github.com/NimratGrewal/currency-converter.git
 
-3. Create and add your API key from **freecurrencyapi**.com in script.js:
-   
-    const apiKey = 'YOUR_API_KEY_HERE';
+2. Open index.html in your browser.
 
-Open index.html in your browser.
+3. Create and add your API key from **freecurrencyapi**.com into the index.html popup!
