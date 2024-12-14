@@ -14,4 +14,8 @@ Setup
 
 2. Open index.html in your browser.
 
-3. Create and add your API key from **freecurrencyapi**.com into the index.html popup!
+3. Create your API key from **freecurrencyapi**.com (also stated in index.html popup)!
+
+4. Paste your API key into the popup
+
+5. Convert your currency! 

@@ -9,60 +9,60 @@
             margin: 0;
             padding: 0;
             font-family: 'Optima', sans-serif;
-            color: #f2dfe9;
-            color-scheme: dark;
+            
         }
-
         body {
-            background-color: #211a29;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            padding: 20px;
+            /* display: flex; */
+            /* flex-direction: column; */
+            align-items: center; 
+            /* height: 100vh;
+            padding: 20px; */
+            /* background-image: linear-gradient(45deg, #423f6b, #292c3f); */
+            background-color: #343154;
         }
 
         header {
-            color: #f2dfe9;
-            background-color: #120d18;
-            padding: 20px;
-            font-size: 1.5rem;
+            color: #eae8f4;
+            background-color: #423f6b;
+            padding: 25px;
+            font-size: 1.2rem;
             letter-spacing: 2px;
-            border-radius: 15px;
             margin-bottom: 20px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+            /* background-image: linear-gradient(45deg, #6a64a9, #2e334c); */
+
         }
 
         footer {
-            color: #f2dfe9;
+            color: #eae8f4;
             font-size: 10px;
-            background-color: #120d18;
+            background-color:#423f6b;
             padding: 10px;
             text-align: center;
-            border-radius: 10px;
             position: fixed;
             bottom: 0;
             width: 100%;
+            box-shadow: 8px 4px 8px rgba(0.5, 0, 0, 0.5);
+            /* background-image: linear-gradient(45deg, #6a64a9, #2e334c); */
         }
 
         #conversionContainer {
-            
-            background-color: #120d18;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.7);
-            margin: 25 25 25 25;
+            padding: 0 20 35 20;
+            margin: 0 10 10 10;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid #cccccc67;
+            width: 50%;
 
         }
-
         select {
             margin: 20px 10px;
-            background-color: #f2dfe9;
-            color: #05002c;
+            background-color: #b1aed3;
+            color: #0b0110;
             padding: 10px;
-            font-size: 1rem;
-            border: 3px solid #202020;
+            font-size: 1.1rem;
+            border: 3px solid #0b0110;
             border-radius: 15px;
             outline: none;
             cursor: pointer;
@@ -70,33 +70,45 @@
         }
 
         select:hover {
-            border-color: #7d64ce;
+            border-color: #eae8f4;
         }
 
-
+        #convertedAmount {
+            font-weight: bold;
+            color: #eae8f4;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+        
         #result {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #120d18;
-            border-radius: 15px;
-            font-size: 1.1rem;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.7);
+            margin: 20px;
+            color: #f0eff8;
+            padding: 10px;
+            margin-top:40px;
+            font-size: 1.3rem;
+            width: 50%;
+            font-weight: bold;
             
         }
-        #result {
-            margin: 30px;
-            color: #f2dfe9;
-            padding: 15px;
-            font-size: 1.1rem;
+        label {
             font-weight: bold;
-  
+            color: #eae8f4;
+        }
+        #amount {
+            margin:30 30 5 30;
+            padding-bottom: 20px;
+            width: 50%;
         }
 
         #intro {
             margin: 20px;
-            color: #f2dfe9;
+            color: #eae8f4;
             padding: 10px;
-            font-size: 1.1rem;
+            margin-top:100px;
+            font-size: 1.2rem;
+            padding-bottom: 50px;
+            border-bottom: 1px solid #cccccc67;
+            width: 50%;
         }
 
         #amountError {
@@ -107,30 +119,38 @@
         }
 
         #amountInput {
-            min-width:10%;
-            color:#05002c;
+            min-width:15%;
+            color:#050505;
             font-weight: bold;
-            height: 5%;
+            height: 10%;
+            width: 30%;
             top:0%;
             right:0%;
             z-index:10;
-            background-color:#e2d7ee;
-            border: 3px solid  #202020;
-            padding:5px;
-            font-size: medium;
+            background-color:#eae8f4;
+            border: 3px solid  #0b0110;
+            padding:7px;
+            font-size:1.1rem;
             border-radius: 15px;
             margin-left: 5px;
+            text-align: center;
         }
         #amountInput:hover {
-            border-color: #7d64ce;
+            border-color: #eae8f4;
         }
         #fromCurrency #toCurrency {
             margin:20px;
             margin-left: 5px;
-            background-color: #120d18;
             padding:10px;
             font-size: medium;
-            border: 3px solid  #202020;
+            font-weight: bold;
+            border: 3px solid  #0b0110;
+        }
+        #inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
         
     
@@ -180,9 +200,22 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
     <script>
+
+       let apiKey;
+
+        // Prompt for API key
+        window.onload = function() {
+            apiKey = prompt("Please enter your API key (from https://freecurrencyapi.com):", "");
+            if (!apiKey) {
+                alert("API key is required to use this application.");
+                return;
+            }
+            // Proceed with your API calls using the apiKey
+        };
         // using jQuery
-        // used FreecurrencyAPI - free use
-        const apiKey = ''; //replace with your free API key 
+        // used FreecurrencyAPI - free use - https://freecurrencyapi.com
+        
+        //const apiKey = ''; //replace with your free API key 
         const apiUrl = 'https://api.freecurrencyapi.com/v1/latest?apikey='; //endpoint
         const currencyApiUrl = 'https://api.freecurrencyapi.com/v1/currencies?apikey='
 
@@ -230,7 +263,13 @@
             const toCurr = $('#toCurrency').val();
             const amount = $('#amountInput').val();
 
-            if (isNaN(amount) || !/^\d+(\.\d+)?$/.test(amount)) {
+            if (amount === "") {
+                // If the amount is empty, don't display an error, just reset the converted amount
+                $('#amountError').text('');
+                $('#amountInput').css('border', '');
+                $('#convertedAmount').text('--');
+                $('#convertedAmount').css('color', '#eae8f4');
+            } else if (!/^\d+(\.\d+)?$/.test(amount)) {
                 // display usage return message.
                 $('#amountError').text("Invalid amount");
                 $('#amountError').css('font-size', 'small');
@@ -238,10 +277,16 @@
                 $('#amountError').css('color', 'red');
                 $('#amountInput').css('border', 'red solid 2px');
                 $('#convertedAmount').text('--');
-            } else {
+                $('#convertedAmount').css('color', '#eae8f4');
+            } else if (fromCurr === "" || toCurr === "") {
+                $('#convertedAmount').text('Please select both currencies');
+                $('#convertedAmount').css('color', 'rgb(255, 171, 171)');
+            }
+            else {
                 // Clear the error message
                 $('#amountError').text('');
                 $('#amountInput').css('border', '');
+                
                 doCurrConversion(parseFloat(amount), fromCurr, toCurr);
             }
 
@@ -262,9 +307,11 @@
                     const convertedAmount = parseFloat((amount * rate).toFixed(2));
                     //update to converted ammount
                     $('#convertedAmount').text(convertedAmount + " " + toCurr);
+                    $('#convertedAmount').css('color', '#abf3b4');
                 },
                 error: function() {
                     $('#convertedAmount').text('Invalid currency');
+                    $('#convertedAmount').css('color', '#eae8f4');
                 }
             });
             // return amount * (query return) = ____ amount of toCurr
